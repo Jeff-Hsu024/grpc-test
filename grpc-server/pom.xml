@@ -98,6 +98,7 @@
 							<options>@generated=omit</options>
 						</binaryMavenPlugin>
 					</binaryMavenPlugins>
+					<outputDirectory>src/main/java</outputDirectory>
 				</configuration>
 				<executions>
 					<execution>

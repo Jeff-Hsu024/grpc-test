@@ -1,8 +1,9 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.example.grpc";
+option java_package = "custom.tibame201020.grpc_server.proto";
 option java_outer_classname = "GreeterProto";
+
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloResponse);
 }
