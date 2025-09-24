@@ -1,5 +1,6 @@
 package custom.tibame201020.grpc_client;
 
+import custom.tibame201020.grpc_client.zmq.ZeroMqConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +16,18 @@ public class GrpcClientApplication {
     }
 
     @Bean
-    RouterFunction<ServerResponse> routerFunction(GreeterClient greeterClient) {
+    RouterFunction<ServerResponse> routerFunction(GreeterClient greeterClient, ZeroMqConfig.ZeroMqPublishChannel mqPublishChannel) {
         return RouterFunctions.route()
                 .path("/test", builder ->
                         builder.GET(req ->
                                 ServerResponse.ok().body(greeterClient.sayHello("from client"))
                         )
+                )
+                .path("/zeromq", builder ->
+                        builder.GET(req -> {
+                            mqPublishChannel.pub("message from client", "topicOne");
+                            return ServerResponse.ok().body("message published");
+                        })
                 )
                 .build();
     }
